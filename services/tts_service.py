@@ -40,10 +40,8 @@ class TTSService:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         # noinspection PyTypeChecker
         prompt_hash: str = hashlib.sha256(text.encode("utf-8")).hexdigest()
-        cache_file: Path = (
-            output_path.parent /
-            f"jailbreak_prompt_{prompt_hash}.{self.__format}"
-        )
+        cache_file: Path = (output_path.parent /
+                            f"jailbreak_prompt_{prompt_hash}.{self.__format}")
 
         if cache_file.exists():
             shutil.copy(cache_file, output_path)

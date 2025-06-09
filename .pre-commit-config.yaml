@@ -54,4 +54,4 @@ repos:
       - id: pylint
         name: pylint (with custom config)
         args: ["--rcfile=./pylintrc"]
-        
+

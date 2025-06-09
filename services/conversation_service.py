@@ -61,8 +61,7 @@ class ConversationService:
 
         if self.__bypass_jailbreak_result:
             self.__logger.info(
-                "🎤 Microphone is now live. You can talk to the bot.",
-            )
+                "🎤 Microphone is now live. You can talk to the bot.",)
             await self.__maintain_mic_forwarding()
             return
 
@@ -85,8 +84,7 @@ class ConversationService:
         ]
         if not self.__utils.validate_audio_devices(devices):
             self.__logger.error(
-                "❌ One or more audio devices are missing or misconfigured.",
-            )
+                "❌ One or more audio devices are missing or misconfigured.",)
             return False
         return True
 
@@ -149,21 +147,18 @@ class ConversationService:
         """
         if result.success or self.__bypass_jailbreak_result:
             self.__logger.info(
-                "🎤 Microphone is now live. You can talk to the bot.",
-            )
+                "🎤 Microphone is now live. You can talk to the bot.",)
             await self.__maintain_mic_forwarding()
         else:
             self.__logger.info(
                 "⛔️ Jailbreak attempt failed or was rejected. "
-                "Stopping audio bridge.",
-            )
+                "Stopping audio bridge.",)
             await self.__mic_bridge.stop()
 
     async def __maintain_mic_forwarding(self) -> None:
         """Maintain microphone forwarding until interrupted."""
         self.__logger.info(
-            "🟢 Microphone forwarding is active. Press Ctrl+C to stop.",
-        )
+            "🟢 Microphone forwarding is active. Press Ctrl+C to stop.",)
         try:
             while True:
                 await asyncio.sleep(1)

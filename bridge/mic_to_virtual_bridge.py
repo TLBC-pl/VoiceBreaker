@@ -46,8 +46,7 @@ class MicrophoneToVirtualCableBridge:
             self._logger.error(
                 f"Could not initialize audio bridge. "
                 f"Input index: {self._input_index}, "
-                f"Output index: {self._output_index}",
-            )
+                f"Output index: {self._output_index}",)
             return
         self.__setup_streams()
         try:
@@ -56,8 +55,7 @@ class MicrophoneToVirtualCableBridge:
             self._running = True
         except Exception as exception:  # pylint: disable=broad-exception-caught
             self._logger.exception(
-                f"Failed to start microphone bridge: {exception}",
-            )
+                f"Failed to start microphone bridge: {exception}",)
 
     async def stop(self) -> None:
         """Stop the audio bridge and clean up resources."""
@@ -86,8 +84,7 @@ class MicrophoneToVirtualCableBridge:
                 self._audio_queue.put_nowait(indata.copy())
             except queue.Full:
                 self._logger.warning(
-                    "Microphone audio queue overflow — dropping frames!",
-                )
+                    "Microphone audio queue overflow — dropping frames!",)
 
         def output_callback(outdata, frames, _time, _status):
             chunk = np.zeros((frames, 1), dtype=np.float32)

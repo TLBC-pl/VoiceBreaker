@@ -58,7 +58,6 @@ class AudioRoutingService:
         for idx, info in enumerate(sd.query_devices()):
             if name.lower() in info["name"].lower() and (
                     info["max_input_channels"] > 0
-                    if is_input else info["max_output_channels"] > 0
-            ):
+                    if is_input else info["max_output_channels"] > 0):
                 return idx
         return None

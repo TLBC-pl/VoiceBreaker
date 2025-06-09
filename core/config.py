@@ -40,8 +40,7 @@ class AppConfig:
         )
 
         self.microphone_name: Final[
-            Optional[str]
-        ] = self.__resolve_microphone_name()
+            Optional[str]] = self.__resolve_microphone_name()
 
         self.virtual_output_name: Final[Optional[str]] = os.getenv(
             "VIRTUAL_OUTPUT_NAME",
@@ -52,14 +51,11 @@ class AppConfig:
             "CABLE Output (VB-Audio Virtual Cable)",
         )
         self.microphone_sample_rate: Final[
-            int
-        ] = AudioDeviceUtils.get_input_device_samplerate(
-                self.microphone_name,
-        )
+            int] = AudioDeviceUtils.get_input_device_samplerate(
+                self.microphone_name,)
 
         self.bot_output_device: Final[Optional[str]] = os.getenv(
-            "BOT_OUTPUT_DEVICE",
-        )
+            "BOT_OUTPUT_DEVICE",)
 
         _debug_env = os.getenv("DEBUG", "0").lower()
         self.debug: Final[bool] = _debug_env in {"1", "true", "yes", "on"}

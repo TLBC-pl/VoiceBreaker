@@ -49,20 +49,17 @@ class SilenceWaiter:
                     "BOT_OUTPUT_DEVICE must be set when running with --verify.",
                 )
             self.__logger.info(
-                "BOT_OUTPUT_DEVICE is not set. Skipping silence check.",
-            )
+                "BOT_OUTPUT_DEVICE is not set. Skipping silence check.",)
             return
 
         input_index = self.__find_device_index()
         device_info = sd.query_devices(input_index)
         self.__logger.info(
             f"Waiting for silence on device: {device_info['name']} "
-            f"(index {input_index})",
-        )
+            f"(index {input_index})",)
         frame_size = int(self.__sample_rate * self.__frame_duration)
         silent_frames_required = int(
-            self.__required_silence / self.__frame_duration,
-        )
+            self.__required_silence / self.__frame_duration,)
         silent_counter = 0
         stream = sd.InputStream(
             samplerate=self.__sample_rate,
@@ -106,7 +103,6 @@ class SilenceWaiter:
         ]
         error_msg = (
             f"BOT_OUTPUT_DEVICE '{self.__bot_output_device}' not found!\n"
-            f"Available devices:\n" + "\n".join(devices)
-        )
+            f"Available devices:\n" + "\n".join(devices))
         self.__logger.error(error_msg)
         raise RuntimeError(error_msg)

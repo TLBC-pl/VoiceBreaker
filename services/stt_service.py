@@ -25,8 +25,7 @@ class STTService:
         self.__client = AsyncOpenAI(api_key=config.openai_api_key)
         self.__model: Final[str] = config.transcription_model
         self.__input_device_index: Final[
-            int
-        ] = self.__resolve_input_device_index()
+            int] = self.__resolve_input_device_index()
 
     async def record_audio(
         self,
@@ -54,8 +53,7 @@ class STTService:
             )
         except Exception:
             self.__logger.exception(
-                "Audio recording with silence detection failed",
-            )
+                "Audio recording with silence detection failed",)
             raise
 
     async def transcribe_audio(self, audio_path: Path) -> str:
@@ -124,11 +122,9 @@ class STTService:
                     silent_chunks += 1
                 else:
                     silent_chunks = 0
-                if silent_chunks >= silence_frame_count or (
-                    time.time() -
-                    start_time
-                    > max_duration
-                ):
+                if silent_chunks >= silence_frame_count or (time.time() -
+                                                            start_time
+                                                            > max_duration):
                     break
         return np.concatenate(recorded, axis=0)
 

@@ -61,8 +61,7 @@ class AudioPlayerAdapter:
             ) and device["max_output_channels"] > 0:
                 return idx
         self._logger.error(
-            f"Audio output device '{self._device_name}' not found.",
-        )
+            f"Audio output device '{self._device_name}' not found.",)
         return None
 
     def __play(self, file_path: Path, device_index: int) -> None:
@@ -78,5 +77,4 @@ class AudioPlayerAdapter:
             sd.wait()
         except Exception as exception:  # pylint: disable=broad-exception-caught
             self._logger.exception(
-                f"Error occurred while playing audio: {exception}",
-            )
+                f"Error occurred while playing audio: {exception}",)

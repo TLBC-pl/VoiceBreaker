@@ -34,8 +34,7 @@ class FileAndAudioUtils:
             return text
         except Exception as exception:
             self.__logger.error(
-                f"Failed to load prompt from file {file_path}: {exception}",
-            )
+                f"Failed to load prompt from file {file_path}: {exception}",)
             raise
 
     def validate_audio_devices(self, device_names: List[str]) -> bool:
