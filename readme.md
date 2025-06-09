@@ -75,5 +75,5 @@ Plays the prompt, records the response, evaluates it, and only forwards the micr
 ```bash
 python -m main --prompt-file path/to/prompt.txt --verify
 ```
-.
+
 > **WARNING:** The `--verify` option is currently in **BETA** and may not work stably. Its use is not recommended for production environments.
