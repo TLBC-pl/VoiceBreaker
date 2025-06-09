@@ -54,8 +54,4 @@ repos:
       - id: pylint
         name: pylint (with custom config)
         args: ["--rcfile=./pylintrc"]
-
-  - repo: https://github.com/asottile/add-trailing-comma
-    rev: v3.1.0
-    hooks:
-      - id: add-trailing-comma
+        
