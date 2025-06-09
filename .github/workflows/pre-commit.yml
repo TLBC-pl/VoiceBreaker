@@ -14,6 +14,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
+        token: ${{ secrets.GITHUB_TOKEN }}
         fetch-depth: 0
 
     - name: Set up Python
@@ -38,20 +39,33 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pre-commit
-        # Install project dependencies for pylint
         pip install -r requirements.txt
 
-    - name: Install pre-commit hooks
-      run: pre-commit install
+    - name: Run pre-commit (check only) on PR
+      if: github.event_name == 'pull_request'
+      run: |
+        # Sprawdzanie bez modyfikacji plików
+        pre-commit run --all-files --verbose || {
+          echo "❌ Code style issues found!"
+          echo "💡 To fix: run 'pre-commit run --all-files' locally and commit changes"
+          exit 1
+        }
 
-    - name: Run pre-commit
-      run: pre-commit run --all-files
+    - name: Run pre-commit (with auto-fix) on push
+      if: github.event_name == 'push'
+      run: |
+        pre-commit run --all-files || echo "Files were modified by pre-commit"
 
-    - name: Upload lint results
-      if: failure()
-      uses: actions/upload-artifact@v4
-      with:
-        name: lint-results
-        path: |
-          *.log
-          .pre-commit-hooks.yaml
+    - name: Commit auto-fixes on push
+      if: github.event_name == 'push'
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "style: auto-fix code style issues [skip ci]"
+          git push
+          echo "✅ Code style issues auto-fixed and committed"
+        else
+          echo "✅ No code style issues found"
+        fi
