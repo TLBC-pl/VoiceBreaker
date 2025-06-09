@@ -25,7 +25,7 @@ The process is simple and automated:
 1.  **Clone the repository and install dependencies:**
 
     ```bash
-    git clone https://github.com/dam2452/voicebreaker.git
+    git clone https://github.com/TLBC-pl/VoiceBreaker.git
     cd voicebreaker
     pip install -r requirements.txt
     ```
