@@ -19,14 +19,14 @@ logger = logging.getLogger(__name__)
     type=click.Path(exists=True, path_type=Path),
     help="Path to the jailbreak prompt file (.txt)",
 )
-@click.option(
-    "--verify/--no-verify",
-    default=False,
-    help=(
-        "Enable jailbreak result verification before forwarding the "
-        "microphone."
-    ),
-)
+# @click.option(
+#     "--verify/--no-verify",
+#     default=False,
+#     help=(
+#         "Enable jailbreak result verification before forwarding the "
+#         "microphone."
+#     ),
+# )
 def main(prompt_file: Path, verify: bool) -> None:
     """Main entry point for the CLI application.
 
