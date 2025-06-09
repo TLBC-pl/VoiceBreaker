@@ -49,6 +49,23 @@ class ConversationService:
         Args:
             prompt_text: Text of the jailbreak prompt to execute.
         """
+        try:
+            await self.__execute_jailbreak_flow(prompt_text)
+        except KeyboardInterrupt:
+            self.__logger.info("🛑 Application interrupted by user")
+            await self.__mic_bridge.stop()
+            raise
+        except Exception as exception:
+            self.__logger.exception(f"Unexpected error: {exception}")
+            await self.__mic_bridge.stop()
+            raise
+
+    async def __execute_jailbreak_flow(self, prompt_text: str) -> None:
+        """Execute the main jailbreak flow logic.
+
+        Args:
+            prompt_text: Text of the jailbreak prompt to execute.
+        """
         if not self.__validate_audio_setup():
             self.__logger.error("❌ Audio device validation failed. Exiting.")
             return
@@ -65,6 +82,10 @@ class ConversationService:
             await self.__maintain_mic_forwarding()
             return
 
+        await self.__process_jailbreak_evaluation()
+
+    async def __process_jailbreak_evaluation(self) -> None:
+        """Process jailbreak evaluation flow."""
         self.__logger.info("🔴 Recording model's response...")
         transcript = await self.__record_and_transcribe_response()
         self.__logger.info("🧠 Evaluating jailbreak attempt...")

@@ -74,7 +74,19 @@ class AudioPlayerAdapter:
         try:
             data, samplerate = sf.read(str(file_path), dtype="float32")
             sd.play(data, samplerate=samplerate, device=device_index)
-            sd.wait()
+
+            while sd.get_stream().active:
+                try:
+                    sd.sleep(100)
+                except KeyboardInterrupt:
+                    self._logger.info("Audio playback interrupted by user")
+                    sd.stop()
+                    raise
+
+        except KeyboardInterrupt:
+            self._logger.info("Audio playback interrupted")
+            sd.stop()
+            raise
         except Exception as exception:  # pylint: disable=broad-exception-caught
             self._logger.exception(
                 f"Error occurred while playing audio: {exception}",)

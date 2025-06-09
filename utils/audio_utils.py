@@ -48,8 +48,6 @@ class SilenceWaiter:
                 raise RuntimeError(
                     "BOT_OUTPUT_DEVICE must be set when running with --verify.",
                 )
-            self.__logger.info(
-                "BOT_OUTPUT_DEVICE is not set. Skipping silence check.",)
             return
 
         input_index = self.__find_device_index()
