@@ -9,7 +9,7 @@ VoiceBreaker is a tool for automating 'jailbreak' tests on AI voice models. It a
 The process is simple and automated:
 
 1. **Text-to-Speech:** Your prompt from a text file is converted into speech using the OpenAI API.
-2. **Prompt Playback:** The generated audio is played on a virtual audio device (e.g., `CABLE Input`), which your target AI model should be listening to.
+2. **Prompt Playback:** The generated audio is played on a virtual audio device, which your target AI model should be listening to.
 3. **Microphone Bridge:** After playback is complete, the program automatically forwards the audio from your real microphone to the virtual device. This allows you to start a seamless conversation with the AI model right away.
 
 ## Requirements
