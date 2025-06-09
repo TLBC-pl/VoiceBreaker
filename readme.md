@@ -35,9 +35,10 @@ pip install -r requirements.txt
 
 2. **Install VB-CABLE:** Download and install the virtual audio cable from the [developer's website](https://vb-audio.com/Cable/).
 
-3. **Create the `.env` file:** In the root directory of the project, create a file named `.env`.
-
-   **The only required variable is `OPENAI_API_KEY`.**
+3. **Set up the `.env` file:**
+   After cloning, you will find a file named `.env.example` in the project root.
+   **Rename this file to `.env`** and open it in your text editor.
+   Set your OpenAI API key as shown below:
 
    ```env
    # .env file
