@@ -20,6 +20,9 @@ The process is simple and automated:
   - [VB-CABLE Virtual Audio Device](https://vb-audio.com/Cable/) (or another virtual audio cable)
   - An OpenAI API Key
 
+> ⚠️ **VoiceBreaker currently works only on Windows.**
+> Support for macOS and Linux is planned for the future.
+
 ## Installation and Configuration
 
 1.  **Clone the repository and install dependencies:**
