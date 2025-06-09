@@ -27,17 +27,18 @@ logger = logging.getLogger(__name__)
 #         "microphone."
 #     ),
 # )
-def main(prompt_file: Path) -> None: #, verify: bool
+def main(prompt_file: Path) -> None:  #, verify: bool
     """Main entry point for the CLI application.
 
     Args:
         prompt_file: Path to the jailbreak prompt file.
-        verify: Whether to verify jailbreak results before forwarding mic.
     """
+    #verify: Whether to verify jailbreak results before forwarding mic.
+
     utils = FileAndAudioUtils()
     prompt_text: str = utils.load_prompt_from_file(prompt_file)
     conversation_service = ConversationService(
-     #   bypass_jailbreak_result=not verify,
+        #   bypass_jailbreak_result=not verify,
     )
     asyncio.run(conversation_service.run_jailbreak_flow(prompt_text))
 
