@@ -1,3 +1,4 @@
+"""Bridge for forwarding microphone audio to virtual cable."""
 import logging
 import queue
 from typing import Optional
@@ -9,11 +10,20 @@ from core.config import config
 
 
 class MicrophoneToVirtualCableBridge:
+    """Bridge that forwards microphone audio to a virtual cable output."""
+
     def __init__(self, mic_name: str, virtual_output_name: str) -> None:
+        """Initialize the microphone to virtual cable bridge.
+
+        Args:
+            mic_name: Name of the microphone input device.
+            virtual_output_name: Name of the virtual output device.
+        """
         self._logger = logging.getLogger(self.__class__.__name__)
         self._mic_name = mic_name
         self._virtual_output_name = virtual_output_name
-        self._sample_rate: int = config.MICROPHONE_SAMPLE_RATE  # tylko z configu
+        # tylko z configu
+        self._sample_rate: int = config.microphone_sample_rate
         self._input_index: Optional[int] = None
         self._output_index: Optional[int] = None
         self._input_stream: Optional[sd.InputStream] = None
@@ -23,11 +33,20 @@ class MicrophoneToVirtualCableBridge:
         self._running: bool = False
 
     async def start(self) -> None:
-        self._input_index = self.__find_device_index(self._mic_name, is_input=True)
-        self._output_index = self.__find_device_index(self._virtual_output_name, is_input=False)
+        """Start the audio bridge between microphone and virtual cable."""
+        self._input_index = self.__find_device_index(
+            self._mic_name,
+            is_input=True,
+        )
+        self._output_index = self.__find_device_index(
+            self._virtual_output_name,
+            is_input=False,
+        )
         if self._input_index is None or self._output_index is None:
             self._logger.error(
-                f"Could not initialize audio bridge. Input index: {self._input_index}, Output index: {self._output_index}",
+                f"Could not initialize audio bridge. "
+                f"Input index: {self._input_index}, "
+                f"Output index: {self._output_index}",
             )
             return
         self.__setup_streams()
@@ -35,10 +54,13 @@ class MicrophoneToVirtualCableBridge:
             self._input_stream.start()
             self._output_stream.start()
             self._running = True
-        except Exception as e: # pylint: disable=broad-exception-caught
-            self._logger.exception(f"Failed to start microphone bridge: {e}")
+        except Exception as exception:  # pylint: disable=broad-exception-caught
+            self._logger.exception(
+                f"Failed to start microphone bridge: {exception}",
+            )
 
     async def stop(self) -> None:
+        """Stop the audio bridge and clean up resources."""
         try:
             if self._input_stream:
                 self._input_stream.stop()
@@ -49,17 +71,23 @@ class MicrophoneToVirtualCableBridge:
                 self._output_stream.close()
                 self._output_stream = None
             self._running = False
-        except Exception as e: # pylint: disable=broad-exception-caught
-            self._logger.exception(f"Error occurred while stopping microphone bridge: {e}")
+        except Exception as exception:  # pylint: disable=broad-exception-caught
+            self._logger.exception(
+                f"Error occurred while stopping microphone bridge: {exception}",
+            )
 
     def __setup_streams(self) -> None:
+        """Set up input and output audio streams with callbacks."""
+
         def input_callback(indata, _frames, _time, status):
             if status:
                 self._logger.warning(f"Mic input stream warning: {status}")
             try:
                 self._audio_queue.put_nowait(indata.copy())
             except queue.Full:
-                self._logger.warning("Microphone audio queue overflow — dropping frames!")
+                self._logger.warning(
+                    "Microphone audio queue overflow — dropping frames!",
+                )
 
         def output_callback(outdata, frames, _time, _status):
             chunk = np.zeros((frames, 1), dtype=np.float32)
@@ -98,6 +126,15 @@ class MicrophoneToVirtualCableBridge:
 
     @staticmethod
     def __find_device_index(name: str, is_input: bool) -> Optional[int]:
+        """Find device index by name and type.
+
+        Args:
+            name: Name of the device to find.
+            is_input: True for input devices, False for output devices.
+
+        Returns:
+            Device index if found, None otherwise.
+        """
         for i, device in enumerate(sd.query_devices()):
             if name.lower().strip() == device["name"].lower().strip():
                 if is_input and device["max_input_channels"] > 0:

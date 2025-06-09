@@ -1,40 +1,60 @@
 fail_fast: false
-exclude: '^ OLD/.* | analysis_results/.* '
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
-      - id: pretty-format-json
-        args: [--autofix]
+      - id: trailing-whitespace
       - id: check-yaml
       - id: check-json
       - id: check-ast
-      - id: trailing-whitespace
-      - id: check-xml
       - id: check-merge-conflict
       - id: check-added-large-files
         args: ["--maxkb=2000"]
       - id: check-symlinks
       - id: check-executables-have-shebangs
-      - id: check-shebang-scripts-are-executable
-  - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.5.5
+
+  - repo: https://github.com/google/yapf
+    rev: v0.40.2
     hooks:
-      - id: chmod
-        args: ["777"]
-        files: (.*scripts\/.*.py$|\.sh$)
-      - id: remove-tabs
-        args: [--whitespaces-count, '4']
+      - id: yapf
+        name: yapf (google style)
+        args: ["-i", "--style=google"]
+
   - repo: https://github.com/PyCQA/isort
     rev: 5.13.2
     hooks:
       - id: isort
-        args: ["--trailing-comma", "--multi-line=3", "--force-grid-wrap=2", "--combine-as", "--use-parentheses",  "--force-sort-within-sections", "--line-length=140"]
+        name: isort (google/black profile)
+        args: ["--profile", "black", "--line-length=80"]
+
+  - repo: https://github.com/pycqa/pydocstyle
+    rev: 6.3.0
+    hooks:
+      - id: pydocstyle
+        name: pydocstyle (google convention)
+        args: ["--convention=google"]
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.9
+    hooks:
+      - id: bandit
+        name: bandit
+        args: ["-s", "B101", "-x", "tests/"]
+
+  - repo: https://github.com/trufflesecurity/trufflehog
+    rev: v3.80.1
+    hooks:
+      - id: trufflehog
+        name: trufflehog
+
   - repo: https://github.com/PyCQA/pylint
     rev: v3.2.5
     hooks:
       - id: pylint
+        name: pylint (with custom config)
         args: ["--rcfile=./pylintrc"]
+
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v3.1.0
     hooks:

@@ -1,0 +1,16 @@
+# pyproject.toml
+
+# Konfiguracja dla automatycznego formattera kodu
+[tool.yapf]
+based_on_style = "google"
+
+# Konfiguracja dla walidatora stylu docstringów
+[tool.pydocstyle]
+convention = "google"
+
+# Konfiguracja dla analizatora bezpieczeństwa
+[tool.bandit]
+# Wyklucz test, który często używa 'assert' (B101)
+skips = ["B101"]
+# Wyklucz całe katalogi z analizy (jeśli dodasz testy w przyszłości)
+exclude_dirs = [".venv", "tests/"]
