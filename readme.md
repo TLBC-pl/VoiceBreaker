@@ -57,7 +57,7 @@ pip install -r requirements.txt
 Run the program from the command line, providing the path to your prompt file.
 
 ```bash
-python main --prompt-file path/to/prompt.txt
+python main.py --prompt-file path/to/prompt.txt
 ```
 
 
