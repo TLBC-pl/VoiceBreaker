@@ -27,11 +27,13 @@ The process is simple and automated:
 
 1.  **Clone the repository and install dependencies:**
 
-    ```bash
-    git clone https://github.com/TLBC-pl/VoiceBreaker.git
-    cd voicebreaker
-    pip install -r requirements.txt
-    ```
+   ```bash
+   git clone https://github.com/TLBC-pl/VoiceBreaker.git
+   cd voicebreaker
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
 
 2.  **Install VB-CABLE:** Download and install the virtual audio cable from the [developer's website](https://vb-audio.com/Cable/).
 
@@ -65,7 +67,7 @@ Run the program from the command line, providing the path to your prompt file.
 Plays the prompt and immediately forwards your microphone.
 
 ```bash
-python -m main --prompt-file path/to/prompt.txt
+python main --prompt-file path/to/prompt.txt
 ```
 
 #### Verification Mode
@@ -73,7 +75,7 @@ python -m main --prompt-file path/to/prompt.txt
 Plays the prompt, records the response, evaluates it, and only forwards the microphone on success.
 
 ```bash
-python -m main --prompt-file path/to/prompt.txt --verify
+python main --prompt-file path/to/prompt.txt --verify
 ```
 
 > **WARNING:** The `--verify` option is currently in **BETA** and may not work stably. Its use is not recommended for production environments.
