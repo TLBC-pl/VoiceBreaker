@@ -22,7 +22,7 @@ class MicrophoneToVirtualCableBridge:
         self._logger = logging.getLogger(self.__class__.__name__)
         self._mic_name = mic_name
         self._virtual_output_name = virtual_output_name
-        # tylko z configu
+
         self._sample_rate: int = config.microphone_sample_rate
         self._input_index: Optional[int] = None
         self._output_index: Optional[int] = None
