@@ -1,0 +1,10 @@
+click~=8.1.8
+python-dotenv~=1.1.0
+elevenlabs
+scipy~=1.15.2
+sounddevice~=0.5.1
+openai~=1.71.0
+pydantic~=2.11.2
+numpy~=2.2.4
+pydub
+soundfile~=0.13.1
