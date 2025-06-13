@@ -38,6 +38,11 @@ class AppConfig:
             "GPT_EVALUATION_MODEL",
             "gpt-4o-mini",
         )
+        self.openai_tts_char_limit: Final[int] = int(
+            os.getenv(
+                "OPENAI_TTS_CHAR_LIMIT",
+                "4096",
+            ))
 
         self.microphone_name: Final[
             Optional[str]] = self.__resolve_microphone_name()
