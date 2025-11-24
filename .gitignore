@@ -110,3 +110,4 @@ cython_debug/
 /recorded_audio
 LOGI POSZLO.txt
 test.txt
+*.txt
